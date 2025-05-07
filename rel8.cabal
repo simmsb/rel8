@@ -31,6 +31,7 @@ library
     , bytestring
     , case-insensitive
     , comonad
+    , containers
     , contravariant
     , data-textual
     , hasql >= 1.6.1.2 && < 1.9
