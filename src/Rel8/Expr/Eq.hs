@@ -9,7 +9,7 @@
 module Rel8.Expr.Eq
   ( (==.), (/=.)
   , (==?), (/=?)
-  , in_
+  , in_, elem_
   )
 where
 
@@ -99,3 +99,14 @@ in_ a (toList -> as) = case nullable @a of
          Opaleye.BinExpr Opaleye.OpIn
            (toPrimExpr a)
            (Opaleye.ListExpr (toPrimExpr <$> xs))
+
+-- | Equivalent to the SQL @= ANY(...)@, similar to 'in_' but takes an array
+-- as input instead of a foldable of expressions.
+elem_ :: forall a. (Sql DBEq a)
+  => Expr a -> (Expr [a]) -> Expr Bool
+elem_ a as =
+    fromPrimExpr $
+        Opaleye.BinExpr
+            (Opaleye.:==)
+            (toPrimExpr a)
+            (Opaleye.FunExpr "ANY" [toPrimExpr as])

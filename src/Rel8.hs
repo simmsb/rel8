@@ -193,6 +193,7 @@ module Rel8
   , (||.), or_
   , (==.), (/=.), (==?), (/=?)
   , in_
+  , elem_
   , boolExpr, caseExpr
   , like, ilike
 
