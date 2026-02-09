@@ -106,7 +106,7 @@ elem_ :: forall a. (Sql DBEq a)
   => Expr a -> (Expr [a]) -> Expr Bool
 elem_ a as =
     fromPrimExpr $
-        Opaleye.BinExpr
+        Opaleye.AnyExpr
             (Opaleye.:==)
             (toPrimExpr a)
-            (Opaleye.FunExpr "ANY" [toPrimExpr as])
+            (toPrimExpr as)
